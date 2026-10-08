@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#080b0d">
+<title>Tattoo Gallery Studio · TGS</title>
+<style>
+:root{--bg:#07090b;--card:#101519;--card2:#151c21;--text:#f5f7f8;--muted:#9aa8af;--teal:#12d6cf;--teal2:#0fa9a5;--danger:#ff6262;--line:#27343a}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at top,#102124 0,#07090b 42%);color:var(--text);font-family:Arial,Helvetica,sans-serif}
+button,input,select,textarea{font:inherit}button{cursor:pointer}
+.app{max-width:1150px;margin:auto;padding-bottom:40px}
+header{padding:24px 18px 12px;text-align:center}.logo{width:64px;height:64px;margin:auto;border:2px solid var(--teal);border-radius:18px;display:grid;place-items:center;font-size:25px;font-weight:900;color:var(--teal);box-shadow:0 0 30px #12d6cf22}
+h1{font-size:23px;margin:10px 0 3px}.sub{color:var(--muted);font-size:12px;letter-spacing:1px}
+nav{display:flex;gap:8px;overflow:auto;padding:12px 14px;position:sticky;top:0;background:#07090bf0;backdrop-filter:blur(12px);z-index:5;border-bottom:1px solid var(--line)}
+nav button{white-space:nowrap;border:1px solid var(--line);background:#101519;color:#dfe7ea;border-radius:12px;padding:10px 13px}
+nav button.active{border-color:var(--teal);color:var(--teal)}
+main{padding:16px}.view{display:none}.view.active{display:block}
+.card{background:linear-gradient(145deg,#12181c,#0d1215);border:1px solid var(--line);border-radius:18px;padding:18px;margin-bottom:14px;box-shadow:0 12px 35px #0005}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px}.stat{padding:16px;border:1px solid var(--line);border-radius:15px;background:#0c1114}.stat b{display:block;font-size:25px;margin-top:6px;color:var(--teal)}
+.row{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap}.muted{color:var(--muted)}.small{font-size:12px;color:var(--muted)}
+label{display:block;font-size:12px;color:#b8c5ca;margin:10px 0 6px}input,select,textarea{width:100%;padding:12px;border-radius:11px;border:1px solid #304047;background:#080c0e;color:#fff;outline:none}input:focus,select:focus,textarea:focus{border-color:var(--teal)}textarea{min-height:90px;resize:vertical}
+.btn{border:0;border-radius:11px;padding:12px 15px;background:var(--teal);color:#001212;font-weight:800}.btn2{border:1px solid var(--line);border-radius:11px;padding:11px 14px;background:#11181c;color:#fff}.danger{color:#ff7c7c;border-color:#6b3030}.full{width:100%}
+table{width:100%;border-collapse:collapse;font-size:13px}th,td{padding:10px 7px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}th{color:#9debe8}
+.badge{display:inline-block;padding:4px 8px;border-radius:99px;background:#123d3d;color:#8ef5ef;font-size:11px}.msg{margin-top:10px;padding:10px;border-radius:10px;background:#102728;color:#9df4ef}.err{background:#351717;color:#ff9b9b}
+.modal{position:fixed;inset:0;background:#000b;display:none;align-items:center;justify-content:center;padding:18px;z-index:20}.modal.show{display:flex}.modalbox{width:min(650px,100%);max-height:90vh;overflow:auto;background:#0e1417;border:1px solid var(--line);border-radius:20px;padding:18px}
+.pin{max-width:390px;margin:40px auto}.pinDots{letter-spacing:8px;font-size:24px;text-align:center;margin:15px}.keys{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.keys button{padding:17px;border-radius:12px;border:1px solid var(--line);background:#12191d;color:#fff}
+.list{display:grid;gap:8px}.item{padding:12px;border:1px solid var(--line);border-radius:12px;background:#0b1012}.empty{text-align:center;padding:25px;color:var(--muted)}
+@media(min-width:800px){main{padding:22px}.two{display:grid;grid-template-columns:1fr 1fr;gap:14px}}
+</style>
+</head>
+<body>
+<div class="app">
+<header>
+  <div class="logo">TG</div>
+  <h1>TATTOO GALLERY STUDIO</h1>
+  <div class="sub">BY JOSER RODRIGUEZ ARTIST · SISTEMA TGS</div>
+</header>
+
+<nav id="nav">
+<button data-v="inicio" class="active">Inicio</button>
+<button data-v="artistas">Artistas</button>
+<button data-v="clientes">Clientes</button>
+<button data-v="agenda">Agenda</button>
+<button data-v="pagos">Pagos</button>
+<button data-v="inventario">Inventario</button>
+<button data-v="consentimiento">Consentimiento</button>
+<button data-v="club">Club TGS</button>
+<button data-v="admin">Administración</button>
+</nav>
+
+<main>
+<section id="inicio" class="view active">
+<div class="card"><h2>Panel TGS</h2><p class="muted">Sistema local de Tattoo Gallery Studio. Los datos se guardan en este dispositivo mediante almacenamiento local.</p></div>
+<div class="grid">
+<div class="stat">Artistas<b id="sArtists">0</b></div><div class="stat">Clientes<b id="sClients">0</b></div><div class="stat">Citas<b id="sAppts">0</b></div><div class="stat">Saldo registrado<b id="sPayments">$0</b></div>
+</div>
+<div class="card"><h3>Acceso rápido</h3><div class="grid">
+<button class="btn" onclick="go('artistas')">Registrar artista</button>
+<button class="btn2" onclick="go('clientes')">Registrar cliente</button>
+<button class="btn2" onclick="go('agenda')">Crear cita</button>
+<button class="btn2" onclick="go('consentimiento')">Nuevo consentimiento</button>
+</div></div>
+</section>
+
+<section id="artistas" class="view">
+<div class="card"><div class="row"><div><h2>Artistas</h2><p class="muted">Registro y control del equipo artístico.</p></div><span class="badge">ADMIN</span></div>
+<div class="two">
+<div><label>Nombre completo *</label><input id="aName" placeholder="Nombre del artista">
+<label>Documento / identificación</label><input id="aDoc">
+<label>WhatsApp</label><input id="aPhone" type="tel">
+<label>Correo</label><input id="aEmail" type="email">
+<label>Especialidad</label><input id="aSpec" placeholder="Realismo, blackwork, piercing...">
+<label>Estado</label><select id="aStatus"><option>Activo</option><option>Inactivo</option></select>
+<button class="btn full" onclick="saveArtist()">GUARDAR ARTISTA</button><div id="aMsg"></div></div>
+<div><h3>Artistas registrados</h3><div id="artistList" class="list"></div></div>
+</div></div>
+</section>
+
+<section id="clientes" class="view">
+<div class="card"><h2>Clientes</h2><div class="two">
+<div><label>Nombre completo *</label><input id="cName"><label>Documento</label><input id="cDoc"><label>WhatsApp</label><input id="cPhone"><label>Correo</label><input id="cEmail" type="email"><button class="btn full" onclick="saveClient()">GUARDAR CLIENTE</button><div id="cMsg"></div></div>
+<div><h3>Clientes registrados</h3><div id="clientList" class="list"></div></div>
+</div></div>
+</section>
+
+<section id="agenda" class="view">
+<div class="card"><h2>Agenda</h2><div class="two">
+<div><label>Cliente *</label><select id="pClient"></select><label>Artista *</label><select id="pArtist"></select><label>Fecha *</label><input id="pDate" type="date"><label>Hora *</label><input id="pTime" type="time"><label>Procedimiento</label><select id="pType"><option>Tatuaje</option><option>Piercing</option><option>Microdermal</option><option>Capacitación</option><option>Otro</option></select><label>Notas</label><textarea id="pNotes"></textarea><button class="btn full" onclick="saveAppt()">AGENDAR CITA</button><div id="pMsg"></div></div>
+<div><h3>Citas</h3><div id="apptList" class="list"></div></div></div></div>
+</section>
+
+<section id="pagos" class="view">
+<div class="card"><h2>Pagos</h2><div class="two">
+<div><label>Cliente</label><select id="payClient"></select><label>Valor COP *</label><input id="payValue" type="number" min="0"><label>Medio</label><select id="payMethod"><option>Efectivo</option><option>Nequi</option><option>Daviplata</option><option>Bancolombia</option><option>Mercado Pago</option><option>Tarjeta</option><option>Otro</option></select><label>Concepto</label><input id="payConcept" placeholder="Tatuaje, piercing, abono..."><button class="btn full" onclick="savePayment()">REGISTRAR PAGO</button><div id="payMsg"></div></div>
+<div><h3>Movimientos</h3><div id="payList" class="list"></div></div></div></div>
+</section>
+
+<section id="inventario" class="view">
+<div class="card"><h2>Inventario</h2><div class="two">
+<div><label>Producto *</label><input id="iName"><label>Cantidad</label><input id="iQty" type="number" min="0"><label>Unidad</label><input id="iUnit" placeholder="unidades, cajas..."><label>Stock mínimo</label><input id="iMin" type="number" min="0"><button class="btn full" onclick="saveItem()">GUARDAR PRODUCTO</button><div id="iMsg"></div></div>
+<div><h3>Existencias</h3><div id="invList" class="list"></div></div></div></div>
+</section>
+
+<section id="consentimiento" class="view">
+<div class="card"><h2>Consentimiento informado</h2><p class="muted">Formulario básico para generar una copia imprimible del consentimiento. Para la versión legal definitiva, usa el documento oficial aprobado por el estudio.</p>
+<label>Cliente</label><select id="coClient"></select><label>Artista</label><select id="coArtist"></select><label>Procedimiento</label><input id="coProc"><label>Zona</label><input id="coZone"><label>Descripción</label><textarea id="coDesc"></textarea>
+<div class="grid"><label><input type="checkbox" id="coBio"> Acepta bioseguridad</label><label><input type="checkbox" id="coData"> Autoriza tratamiento de datos</label></div>
+<button class="btn" onclick="printConsent()">GENERAR / IMPRIMIR</button><div id="coMsg"></div></div>
+</section>
+
+<section id="club" class="view">
+<div class="card"><h2>Club TGS</h2><p class="muted">Programa interno de puntos. Cada cliente puede acumular puntos en este dispositivo.</p>
+<label>Cliente</label><select id="clubClient"></select><label>Puntos a agregar</label><input id="clubPoints" type="number" min="1" value="10"><button class="btn" onclick="addPoints()">AGREGAR PUNTOS</button><div id="clubMsg"></div>
+<div id="clubList" class="list" style="margin-top:12px"></div></div>
+</section>
+
+<section id="admin" class="view">
+<div id="adminGate" class="card pin"><h2>🔒 Administración</h2><p class="muted">Solo administración autorizada.</p><div id="pinDots" class="pinDots">○○○○○○○○</div><div class="keys">
+<button onclick="pinKey('1')">1</button><button onclick="pinKey('2')">2</button><button onclick="pinKey('3')">3</button><button onclick="pinKey('4')">4</button><button onclick="pinKey('5')">5</button><button onclick="pinKey('6')">6</button><button onclick="pinKey('7')">7</button><button onclick="pinKey('8')">8</button><button onclick="pinKey('9')">9</button><button onclick="pinClear()">⌫</button><button onclick="pinKey('0')">0</button><button class="btn" onclick="pinEnter()">ENTRAR</button></div><div id="pinMsg"></div></div>
+<div id="adminPanel" class="card" style="display:none"><h2>Administración</h2><p class="muted">Control de seguridad y respaldo.</p><div class="grid"><button class="btn2" onclick="exportData()">EXPORTAR RESPALDO</button><button class="btn2" onclick="document.getElementById('importFile').click()">IMPORTAR RESPALDO</button><button class="btn2 danger" onclick="resetData()">BORRAR DATOS LOCALES</button><button class="btn2" onclick="lockAdmin()">BLOQUEAR</button></div><input id="importFile" type="file" accept="application/json" style="display:none" onchange="importData(event)"><div id="adminMsg"></div></div>
+</section>
+</main>
+</div>
+
+<div class="modal" id="editModal"><div class="modalbox"><div class="row"><h3>Editar artista</h3><button class="btn2" onclick="closeModal()">Cerrar</button></div><input type="hidden" id="editId"><label>Nombre</label><input id="eName"><label>Documento</label><input id="eDoc"><label>WhatsApp</label><input id="ePhone"><label>Correo</label><input id="eEmail"><label>Especialidad</label><input id="eSpec"><label>Estado</label><select id="eStatus"><option>Activo</option><option>Inactivo</option></select><button class="btn full" onclick="updateArtist()">GUARDAR CAMBIOS</button></div></div>
+
+<script>
+const KEY='TGS_SINGLE_FILE_V1';
+let db=load(), pinBuffer='', editing=null;
+function load(){try{return JSON.parse(localStorage.getItem(KEY)||'{"artists":[],"clients":[],"appointments":[],"payments":[],"inventory":[],"points":{}})}catch(e){return {artists:[],clients:[],appointments:[],payments:[],inventory:[],points:{}}}}
+function persist(){localStorage.setItem(KEY,JSON.stringify(db));refresh()}
+function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
+function go(id){document.querySelectorAll('.view').forEach(x=>x.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('nav button').forEach(x=>x.classList.toggle('active',x.dataset.v===id));if(id==='agenda'||id==='pagos'||id==='consentimiento'||id==='club')fillSelects()}
+document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>go(b.dataset.v));
+function msg(id,t,err=false){let e=document.getElementById(id);e.className=err?'msg err':'msg';e.textContent=t}
+function saveArtist(){let n=aName.value.trim();if(!n)return msg('aMsg','Escribe el nombre del artista.',true);db.artists.push({id:crypto.randomUUID(),name:n,doc:aDoc.value.trim(),phone:aPhone.value.trim(),email:aEmail.value.trim(),spec:aSpec.value.trim(),status:aStatus.value,created:new Date().toISOString()});['aName','aDoc','aPhone','aEmail','aSpec'].forEach(x=>document.getElementById(x).value='');msg('aMsg','✓ Artista registrado correctamente.');persist()}
+function renderArtists(){artistList.innerHTML=db.artists.length?db.artists.map(a=>`<div class="item"><div class="row"><b>${esc(a.name)}</b><span class="badge">${esc(a.status)}</span></div><div class="small">${esc(a.spec||'Sin especialidad')} · ${esc(a.phone||'Sin WhatsApp')}</div><div style="margin-top:8px;display:flex;gap:7px"><button class="btn2" onclick="editArtist('${a.id}')">Editar</button><button class="btn2 danger" onclick="deleteArtist('${a.id}')">Eliminar</button></div></div>`).join(''):'<div class="empty">Aún no hay artistas registrados.</div>'}
+function editArtist(id){let a=db.artists.find(x=>x.id===id);if(!a)return;editId.value=a.id;eName.value=a.name;eDoc.value=a.doc;ePhone.value=a.phone;eEmail.value=a.email;eSpec.value=a.spec;eStatus.value=a.status;editModal.classList.add('show')}
+function closeModal(){editModal.classList.remove('show')}
+function updateArtist(){let a=db.artists.find(x=>x.id===editId.value);if(!a)return;a.name=eName.value.trim();a.doc=eDoc.value.trim();a.phone=ePhone.value.trim();a.email=eEmail.value.trim();a.spec=eSpec.value.trim();a.status=eStatus.value;persist();closeModal()}
+function deleteArtist(id){if(confirm('¿Eliminar este artista?')){db.artists=db.artists.filter(x=>x.id!==id);persist()}}
+function saveClient(){let n=cName.value.trim();if(!n)return msg('cMsg','Escribe el nombre.',true);db.clients.push({id:crypto.randomUUID(),name:n,doc:cDoc.value.trim(),phone:cPhone.value.trim(),email:cEmail.value.trim(),created:new Date().toISOString()});['cName','cDoc','cPhone','cEmail'].forEach(x=>document.getElementById(x).value='');msg('cMsg','✓ Cliente guardado.');persist()}
+function renderClients(){clientList.innerHTML=db.clients.length?db.clients.map(c=>`<div class="item"><b>${esc(c.name)}</b><div class="small">${esc(c.doc||'')} · ${esc(c.phone||'')}</div></div>`).join(''):'<div class="empty">Aún no hay clientes.</div>'}
+function opts(arr,placeholder='Seleccionar'){return `<option value="">${placeholder}</option>`+arr.map(x=>`<option value="${x.id}">${esc(x.name)}</option>`).join('')}
+function fillSelects(){pClient.innerHTML=opts(db.clients);payClient.innerHTML=opts(db.clients);coClient.innerHTML=opts(db.clients);clubClient.innerHTML=opts(db.clients);pArtist.innerHTML=opts(db.artists.filter(a=>a.status==='Activo'));coArtist.innerHTML=opts(db.artists)}
+function saveAppt(){if(!pClient.value||!pArtist.value||!pDate.value||!pTime.value)return msg('pMsg','Completa cliente, artista, fecha y hora.',true);db.appointments.push({id:crypto.randomUUID(),client:pClient.value,artist:pArtist.value,date:pDate.value,time:pTime.value,type:pType.value,notes:pNotes.value.trim(),created:new Date().toISOString()});pNotes.value='';msg('pMsg','✓ Cita agendada.');persist()}
+function renderAppts(){apptList.innerHTML=db.appointments.length?db.appointments.slice().sort((a,b)=>(a.date+a.time).localeCompare(b.date+b.time)).map(a=>{let c=db.clients.find(x=>x.id===a.client),r=db.artists.find(x=>x.id===a.artist);return `<div class="item"><b>${esc(a.date)} ${esc(a.time)}</b><div>${esc(c?.name||'Cliente eliminado')} · ${esc(r?.name||'Artista eliminado')}</div><div class="small">${esc(a.type)} ${a.notes?'· '+esc(a.notes):''}</div></div>`}).join(''):'<div class="empty">No hay citas.</div>'}
+function savePayment(){let v=Number(payValue.value);if(!v||v<0)return msg('payMsg','Ingresa un valor válido.',true);db.payments.push({id:crypto.randomUUID(),client:payClient.value,value:v,method:payMethod.value,concept:payConcept.value.trim(),date:new Date().toISOString()});payValue.value='';payConcept.value='';msg('payMsg','✓ Pago registrado.');persist()}
+function money(n){return new Intl.NumberFormat('es-CO',{style:'currency',currency:'COP',maximumFractionDigits:0}).format(n||0)}
+function renderPayments(){payList.innerHTML=db.payments.length?db.payments.slice().reverse().map(p=>{let c=db.clients.find(x=>x.id===p.client);return `<div class="item"><b>${money(p.value)}</b> · ${esc(p.method)}<div class="small">${esc(c?.name||'Sin cliente')} · ${esc(p.concept||'Sin concepto')}</div></div>`}).join(''):'<div class="empty">No hay pagos registrados.</div>'}
+function saveItem(){let n=iName.value.trim();if(!n)return msg('iMsg','Escribe el producto.',true);db.inventory.push({id:crypto.randomUUID(),name:n,qty:Number(iQty.value)||0,unit:iUnit.value.trim(),min:Number(iMin.value)||0});['iName','iQty','iUnit','iMin'].forEach(x=>document.getElementById(x).value='');msg('iMsg','✓ Producto guardado.');persist()}
+function renderInv(){invList.innerHTML=db.inventory.length?db.inventory.map(i=>`<div class="item"><div class="row"><b>${esc(i.name)}</b><span class="badge">${i.qty} ${esc(i.unit)}</span></div><div class="small">${i.qty<=i.min?'⚠ Stock bajo':'Stock correcto'} · mínimo ${i.min}</div></div>`).join(''):'<div class="empty">No hay productos.</div>'}
+function printConsent(){if(!coClient.value||!coArtist.value||!coProc.value)return msg('coMsg','Selecciona cliente, artista y procedimiento.',true);if(!coBio.checked||!coData.checked)return msg('coMsg','Debes aceptar bioseguridad y tratamiento de datos.',true);let c=db.clients.find(x=>x.id===coClient.value),a=db.artists.find(x=>x.id===coArtist.value);let w=window.open('','_blank');w.document.write(`<html><head><title>Consentimiento TGS</title><style>body{font-family:Arial;margin:30px;color:#111}h1{color:#0b8f8c}table{width:100%;border-collapse:collapse}td{padding:8px;border-bottom:1px solid #ddd}</style></head><body><h1>TATTOO GALLERY STUDIO</h1><p>BY JOSER RODRIGUEZ ARTIST</p><h2>CONSENTIMIENTO INFORMADO</h2><table><tr><td>Cliente</td><td>${esc(c.name)}</td></tr><tr><td>Documento</td><td>${esc(c.doc)}</td></tr><tr><td>WhatsApp</td><td>${esc(c.phone)}</td></tr><tr><td>Artista</td><td>${esc(a.name)}</td></tr><tr><td>Procedimiento</td><td>${esc(coProc.value)}</td></tr><tr><td>Zona</td><td>${esc(coZone.value)}</td></tr><tr><td>Descripción</td><td>${esc(coDesc.value)}</td></tr><tr><td>Fecha</td><td>${new Date().toLocaleString('es-CO')}</td></tr></table><h3>Declaraciones</h3><p>El cliente declara que recibió información sobre el procedimiento, riesgos previsibles, cuidados posteriores y condiciones de bioseguridad, y autoriza el tratamiento de sus datos para las finalidades informadas.</p><p>✓ Bioseguridad aceptada<br>✓ Tratamiento de datos autorizado</p><br><p>Firma del cliente: __________________________</p><p>Firma del artista: __________________________</p><script>window.print()<\/script></body></html>`);w.document.close();msg('coMsg','✓ Documento generado para imprimir o guardar como PDF.')}
+function addPoints(){if(!clubClient.value)return msg('clubMsg','Selecciona un cliente.',true);let n=Number(clubPoints.value);if(!n||n<1)return msg('clubMsg','Ingresa puntos válidos.',true);db.points[clubClient.value]=(db.points[clubClient.value]||0)+n;msg('clubMsg','✓ Puntos agregados.');persist()}
+function renderClub(){clubList.innerHTML=db.clients.length?db.clients.map(c=>`<div class="item"><div class="row"><b>${esc(c.name)}</b><span class="badge">${db.points[c.id]||0} puntos</span></div></div>`).join(''):'<div class="empty">No hay clientes.</div>'}
+function pinKey(k){if(pinBuffer.length<8)pinBuffer+=k;updateDots()}
+function pinClear(){pinBuffer=pinBuffer.slice(0,-1);updateDots()}
+function updateDots(){pinDots.textContent='●'.repeat(pinBuffer.length)+'○'.repeat(8-pinBuffer.length)}
+function pinEnter(){let stored=localStorage.getItem('TGS_ADMIN_PIN');if(!stored){if(pinBuffer.length<4)return msg('pinMsg','Crea un PIN de mínimo 4 dígitos.',true);localStorage.setItem('TGS_ADMIN_PIN',pinBuffer);openAdmin();return}if(pinBuffer===stored)openAdmin();else msg('pinMsg','PIN incorrecto.',true);pinBuffer='';updateDots()}
+function openAdmin(){adminGate.style.display='none';adminPanel.style.display='block';msg('adminMsg','✓ Acceso administrativo autorizado.')}
+function lockAdmin(){adminGate.style.display='block';adminPanel.style.display='none';pinBuffer='';updateDots()}
+function exportData(){let blob=new Blob([JSON.stringify(db,null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='TGS_Respaldo_'+new Date().toISOString().slice(0,10)+'.json';a.click()}
+function importData(e){let f=e.target.files[0];if(!f)return;let r=new FileReader();r.onload=()=>{try{let x=JSON.parse(r.result);if(!x.artists||!x.clients)throw Error();db=x;persist();msg('adminMsg','✓ Respaldo importado.')}catch(err){msg('adminMsg','Archivo no válido.',true)}};r.readAsText(f)}
+function resetData(){if(confirm('Esto borrará los datos locales. ¿Continuar?')){db={artists:[],clients:[],appointments:[],payments:[],inventory:[],points:{}};persist();msg('adminMsg','Datos locales borrados.')}}
+function refresh(){renderArtists();renderClients();renderAppts();renderPayments();renderInv();renderClub();fillSelects();sArtists.textContent=db.artists.length;sClients.textContent=db.clients.length;sAppts.textContent=db.appointments.length;sPayments.textContent=money(db.payments.reduce((s,x)=>s+Number(x.value||0),0))}
+refresh();
+</script>
+</body>
+</html>
